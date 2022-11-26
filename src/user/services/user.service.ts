@@ -11,4 +11,14 @@ export class UserService {
     this.users.push(userEntity);
     return userEntity;
   }
+
+  async updateUser(userData: PartialUserDto): Promise<IUserEntity> {
+    this.users.map((user, index) => {
+      if(user.id === userData.id){
+        const upDatedUser = this.users.find((user) => user.id === userData.id);
+        return upDatedUser;
+      }
+    })
+  }
+
 }
