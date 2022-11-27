@@ -24,4 +24,8 @@ export class UserService {
     return updatedUser;
   }
 
+  async getAllUsers(): Promise<IUserEntity[]> {
+    return this.users;
+  }
+
 }
