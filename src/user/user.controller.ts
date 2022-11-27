@@ -13,6 +13,15 @@ export class UserController {
     return await this.service.getAllUsers();
   }
 
+  @Get(':id')
+  async getUserById(@Param('id') userId: string): Promise<IUserEntity> {
+    try {
+      return await this.service.getUserById(userId);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   @Post()
   async createUser(
     @Body() { cpf, email, password, name, role }: UserDto,
@@ -38,5 +47,4 @@ export class UserController {
       console.log(err);
     }
   }
-  
 }
