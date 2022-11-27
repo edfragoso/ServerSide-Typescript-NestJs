@@ -16,7 +16,7 @@ export class UserService {
   async updateUser(userData: PartialUserDto): Promise<IUserEntity> {
     this.users.map((user, index) => {
       if(user.id === userData.id){
-        const upDatedUser = Object.assign(user. userData);
+        const upDatedUser = Object.assign(user, userData);
         this.users.splice(index, 1, updatedUser);
       }
     });
