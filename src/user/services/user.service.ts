@@ -1,6 +1,7 @@
 import { IUserEntity } from '../entityes/user.entity';
 import { UserDto } from './dto/userInput.dto';
 import { randomUUID } from 'node:crypto';
+import { PartialUserDto } from './dto/partialUserInput.dto';
 
 
 export class UserService {
@@ -15,10 +16,12 @@ export class UserService {
   async updateUser(userData: PartialUserDto): Promise<IUserEntity> {
     this.users.map((user, index) => {
       if(user.id === userData.id){
-        const upDatedUser = this.users.find((user) => user.id === userData.id);
-        return upDatedUser;
+        const upDatedUser = Object.assign(user. userData);
+        this.users.splice(index, 1, updatedUser);
       }
-    })
+    });
+    const updatedUser = this.users.find((user) => user.id === userData.id);
+    return updatedUser;
   }
 
 }
