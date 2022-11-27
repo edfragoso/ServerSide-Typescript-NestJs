@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { IUserEntity } from './entityes/user.entity';
 import { PartialUserDto } from './services/dto/partialUserInput.dto';
 import { UserDto } from './services/dto/userinput.dto';
@@ -43,6 +51,20 @@ export class UserController {
   async updateUser(@Body() userData: PartialUserDto): Promise<IUserEntity> {
     try {
       return await this.service.updateUser(userData);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  @Delete(':id')
+  async deleteUserById(@Param('id') userId: string): Promise<string> {
+    try {
+      const userIsDeleted = await this.service.deleteUserById(userId);
+      if (userIsDeleted) {
+        return 'User deleted successfully';
+      } else {
+        return 'User not found';
+      }
     } catch (err) {
       console.log(err);
     }
