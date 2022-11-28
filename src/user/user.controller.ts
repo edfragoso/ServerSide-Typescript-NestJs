@@ -24,7 +24,7 @@ export class UserController {
   @Get(':id')
   async getUserById(@Param('id') userId: string): Promise<IUserEntity> {
     try {
-      return await this.service.getUserById(userId);
+      return await this.service.findUserById(userId);
     } catch (err) {
       console.log(err);
     }
@@ -58,15 +58,11 @@ export class UserController {
 
   @Delete(':id')
   async deleteUserById(@Param('id') userId: string): Promise<string> {
-    try {
-      const userIsDeleted = await this.service.deleteUserById(userId);
-      if (userIsDeleted) {
-        return 'User deleted successfully';
-      } else {
-        return 'User not found';
-      }
-    } catch (err) {
-      console.log(err);
+    const userIsDeleted = await this.service.deleteUserById(userId);
+    if (userIsDeleted) {
+      return 'User deleted successfully';
+    } else {
+      return 'User not found';
     }
   }
 }
