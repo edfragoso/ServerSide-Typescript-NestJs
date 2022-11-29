@@ -13,7 +13,7 @@ import { PartialUserDto } from './services/dto/partialUserInput.dto';
 import { UserDto } from './services/dto/userInput.dto';
 import { UserService } from './services/user.service';
 import { Response } from 'express';
-import { HandleException } from '../utils/exceptions/exceptionshelper';
+import { HandleException } from 'src/utils/exceptions/exceptionshelper';
 
 @Controller('user')
 export class UserController {
