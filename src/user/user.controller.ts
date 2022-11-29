@@ -13,6 +13,7 @@ import { PartialUserDto } from './services/dto/partialUserInput.dto';
 import { UserDto } from './services/dto/userInput.dto';
 import { UserService } from './services/user.service';
 import { Response } from 'express';
+import { HandleException } from '../utils/exceptions/exceptionsHelper';
 
 @Controller('user')
 export class UserController {
@@ -28,7 +29,7 @@ export class UserController {
     try {
       return await this.service.findUserById(userId);
     } catch (err) {
-      console.log(err);
+      HandleException(err);
     }
   }
 
@@ -36,7 +37,7 @@ export class UserController {
   async createUser(
     @Body() { cpf, email, password, name, role }: UserDto,
     @Res() response: Response,
-  ): Promise<void> {
+  ) {
     try {
       const result = await this.service.createUser({
         cpf,
@@ -57,13 +58,14 @@ export class UserController {
     try {
       return await this.service.updateUser(userData);
     } catch (err) {
-      console.log(err);
+      HandleException(err);
     }
   }
 
   @Delete(':id')
   async deleteUserById(@Param('id') userId: string): Promise<string> {
     const userIsDeleted = await this.service.deleteUserById(userId);
+    console.log(userIsDeleted);
     if (userIsDeleted) {
       return 'User deleted successfully';
     } else {
@@ -72,6 +74,3 @@ export class UserController {
   }
 }
 
-function HandleException(err: any): Promise<void> {
-  throw new Error('Function not implemented.');
-}
