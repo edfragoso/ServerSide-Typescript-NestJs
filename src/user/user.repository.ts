@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Exception } from '../utils/exceptions/exception';
-import { Exceptions } from '../utils/exceptions/exceptionshelper';
+import { Exceptions } from '../utils/exceptions/exceptionsHelper';
 import { PrismaService } from '../prisma/prisma.service';
 import { IUserEntity } from './entityes/user.entity';
 import { PartialUserDto } from './services/dto/partialUserInput.dto';
@@ -56,7 +56,7 @@ export class UserRepository {
     }
   }
 
- async findUserById(id: string): Promise<IUserEntity> {
+  async findUserById(id: string): Promise<IUserEntity> {
     try {
       const foundUser = await this.prisma.user.findUniqueOrThrow({
         where: { id: id },

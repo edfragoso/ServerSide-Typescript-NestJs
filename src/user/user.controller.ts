@@ -13,7 +13,7 @@ import { PartialUserDto } from './services/dto/partialUserInput.dto';
 import { UserDto } from './services/dto/userInput.dto';
 import { UserService } from './services/user.service';
 import { Response } from 'express';
-import { HandleException } from '../utils/exceptions/exceptionshelper';
+import { HandleException } from '../utils/exceptions/exceptionsHelper';
 
 @Controller('user')
 export class UserController {
@@ -37,7 +37,7 @@ export class UserController {
   async createUser(
     @Body() { cpf, email, password, name, role }: UserDto,
     @Res() response: Response,
-  ) {
+  ): Promise<void> {
     try {
       const result = await this.service.createUser({
         cpf,
@@ -73,4 +73,3 @@ export class UserController {
     }
   }
 }
-

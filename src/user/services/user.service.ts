@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { PartialUserDto } from './dto/partialUserInput.dto';
 import { UserRepository } from '../user.repository';
 import { Injectable } from '@nestjs/common';
-import { Exceptions } from '../../utils/exceptions/exceptionshelper';
+import { Exceptions } from '../../utils/exceptions/exceptionsHelper';
 
 @Injectable()
 export class UserService {
@@ -16,7 +16,7 @@ export class UserService {
       throw {
         message: 'Passoword less than 7 characters.',
         exception: Exceptions.InvalidData,
-      }
+      };
     }
     const createdUser = await this.userRepository.createUser(userEntity);
     return createdUser;
