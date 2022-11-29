@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { PartialUserDto } from './dto/partialUserInput.dto';
 import { UserRepository } from '../user.repository';
 import { Injectable } from '@nestjs/common';
-import { Exceptions } from 'src/utils/exceptions/exceptionshelper';
+import { Exceptions } from '../../utils/exceptions/exceptionshelper';
 
 @Injectable()
 export class UserService {
