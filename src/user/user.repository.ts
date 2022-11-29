@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Exception } from '../utils/exceptions/exception';
-import { Exceptions } from '../utils/exceptions/exceptionsHelper';
+import { Exceptions } from '../utils/exceptions/exceptionshelper';
 import { PrismaService } from '../prisma/prisma.service';
 import { IUserEntity } from './entityes/user.entity';
 import { PartialUserDto } from './services/dto/partialUserInput.dto';

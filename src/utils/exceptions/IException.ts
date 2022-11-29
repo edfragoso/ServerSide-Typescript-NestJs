@@ -1,4 +1,4 @@
-import { Exceptions } from './exceptionsHelper';
+import { Exceptions } from './exceptionshelper';
 
 export interface Exception {
   message?: string;
