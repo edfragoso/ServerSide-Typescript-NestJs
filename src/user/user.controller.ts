@@ -36,7 +36,7 @@ export class UserController {
   async createUser(
     @Body() { cpf, email, password, name, role }: UserDto,
     @Res() response: Response,
-  ) {
+  ): Promise<void> {
     try {
       const result = await this.service.createUser({
         cpf,
@@ -46,7 +46,7 @@ export class UserController {
         role,
       });
 
-      response.status(201).send(result);;
+      response.status(201).send(result);
     } catch (err) {
       HandleException(err);
     }
@@ -72,7 +72,6 @@ export class UserController {
   }
 }
 
-function HandleException(err: any) {
+function HandleException(err: any): Promise<void> {
   throw new Error('Function not implemented.');
 }
-

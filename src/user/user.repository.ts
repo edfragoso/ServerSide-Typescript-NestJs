@@ -3,28 +3,27 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { IUserEntity } from './entityes/user.entity';
 import { PartialUserDto } from './services/dto/partialUserInput.dto';
 
-
 @Injectable()
 export class UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser(user: IUserEntity): Promise<IUserEntity> {
-    const CreatedUser = await this.prisma.user.create({data: user})
+    const CreatedUser = await this.prisma.user.create({ data: user });
     return CreatedUser;
   }
 
   async updateUser(user: PartialUserDto): Promise<IUserEntity> {
     const updatedUser = await this.prisma.user.update({
-        where: {id: user.id},
-        data: user,
+      where: { id: user.id },
+      data: user,
     });
     return updatedUser;
   }
 
   async deleteUser(id: string): Promise<IUserEntity> {
     const deletedUser = await this.prisma.user.delete({
-        where: {id: id}
-    })
+      where: { id: id },
+    });
     return deletedUser;
   }
 
@@ -35,7 +34,7 @@ export class UserRepository {
 
   async findUserById(id: string): Promise<IUserEntity> {
     const foundUser = await this.prisma.user.findUniqueOrThrow({
-        where: {id: id},
+      where: { id: id },
     });
     return foundUser;
   }
