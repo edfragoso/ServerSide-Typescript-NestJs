@@ -19,7 +19,7 @@ export class ClassroomController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.classroomService.findOne(+id);
+    return this.classroomService.findOne(id);
   }
 
   @Patch(':id')
