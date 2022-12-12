@@ -1,11 +1,15 @@
-import { AttendanceList } from "../../attendance-list/entities/attendance-list.entity";
-import { IUserEntity } from "../../user/entityes/user.entity";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
 
 export class CreateClassroomDto {
+    @ApiProperty()
+    @IsString()
     name: string;
+    @ApiProperty()
+    @IsString()
     theme: string;
+    @ApiProperty()
+    @IsString()
     subject: string;
-    students: IUserEntity[];
-    teachers: IUserEntity[];
-    attendances: AttendanceList[]; 
+
 }
