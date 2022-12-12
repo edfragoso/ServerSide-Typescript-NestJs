@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { HandleException } from '../utils/exceptions/exceptionsHelper';
 import { AttendanceListService } from './attendance-list.service';
 import { CreateAttendanceListDto } from './dto/create-attendance-list.dto';
+import { RegisterOnAttendanceListDto } from './dto/register-on-attendance-list.dto';
 import { UpdateAttendanceListDto } from './dto/update-attendance-list.dto';
 
 @Controller('attendance-list')
@@ -12,6 +14,16 @@ export class AttendanceListController {
     return this.attendanceListService.create(createAttendanceListDto);
   }
 
+  @Post("registerInAttendanceList")
+  async registerInAttendanceList(
+    @Body() { attendanceListId, userId }: RegisterOnAttendanceListDto,) {
+      try {
+        return await this.attendanceListService.registerOnAttendanceList(attendanceListId, userId);
+      } catch (error) {
+        HandleException(error)
+      }
+    }
+
   @Get()
   findAll() {
     return this.attendanceListService.findAll();
@@ -19,12 +31,12 @@ export class AttendanceListController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.attendanceListService.findOne(+id);
+    return this.attendanceListService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAttendanceListDto: UpdateAttendanceListDto) {
-    return this.attendanceListService.update(+id, updateAttendanceListDto);
+    return this.attendanceListService.update(id, updateAttendanceListDto);
   }
 
   @Delete(':id')
