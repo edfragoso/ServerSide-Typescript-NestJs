@@ -1,9 +1,8 @@
-import { IUserEntity } from "../../user/entityes/user.entity";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
 
 export class CreateAttendanceListDto {
+    @ApiProperty()
+    @IsString()
     classroomId: string;
-    stundents: IUserEntity[];
-    startDate: Date;
-    endDate: Date;
-    todayDate: Date;
 }
