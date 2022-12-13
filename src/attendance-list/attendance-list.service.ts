@@ -60,6 +60,7 @@ export class AttendanceListService {
   ): Promise<AttendanceList> {
     const findedAttendenceList = await this.findOne(attendanceListId);
     const actualDate = new Date(Date.now());
+    
     if (actualDate.getTime() > findedAttendenceList.endDate.getTime()) {
       throw new Exception(Exceptions.InvalidData, 'Ferrou');
     }
