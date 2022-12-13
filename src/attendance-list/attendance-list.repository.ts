@@ -59,4 +59,14 @@ export class AttendanceListRepository {
       include: { students: true },
     });
   }
+
+  async attendanceListById(id: string): Promise<AttendanceList> {
+    return await this.prismaService.attendanceList.findUniqueOrThrow({
+      where: { id: id },
+      include: {
+        students: true,
+      },
+    });
+  }
+  
 }
