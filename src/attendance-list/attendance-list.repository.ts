@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common/decorators';
 import { PrismaService } from '../prisma/prisma.service';
 import { Exception } from '../utils/exceptions/exception';
 import { Exceptions } from '../utils/exceptions/exceptionsHelper';
 import { UpdateAttendanceListDto } from './dto/update-attendance-list.dto';
 import { AttendanceList } from './entities/attendance-list.entity';
 
+@Injectable()
 export class AttendanceListRepository {
   constructor(private readonly prismaService: PrismaService) {}
   async createAttendanceList({
@@ -68,5 +70,5 @@ export class AttendanceListRepository {
       },
     });
   }
-  
+
 }
