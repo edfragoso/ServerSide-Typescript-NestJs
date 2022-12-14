@@ -44,6 +44,7 @@ export class UserService {
 
   async findUserById(userId: string): Promise<IUserEntity> {
     const foundUser = await this.userRepository.findUserById(userId);
+    delete foundUser.password;
     return foundUser;
   }
 }
