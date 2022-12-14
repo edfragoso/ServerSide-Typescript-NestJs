@@ -55,4 +55,11 @@ export class ClassroomRepository {
       include: this.dataToReturn,
     });
   }
+
+  async deleteClassroom(id: string): Promise<Classroom> {
+    return await this.prismaService.classroom.delete({
+      where: { id: id },
+    });
+  }
+
 }
