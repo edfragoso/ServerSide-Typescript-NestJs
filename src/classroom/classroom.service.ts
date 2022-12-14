@@ -36,14 +36,8 @@ export class ClassroomService {
     return await this.classroomRepository.updateClassroom(updateClassroomDto);
   }
 
-  }
-
   async remove(id: string): Promise<string> {
-    this._classroomList.map((classroom, index) => {
-      if (classroom.id === id) {
-        this._classroomList.splice(index, 1);
-      }
-    });
+    await this.classroomRepository.deleteClassroom(id);
     return Promise.resolve('Classroom deleted succesfully');
   }
 }
