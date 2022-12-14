@@ -41,19 +41,24 @@ export class ClassroomRepository {
   }
 
   async updateClassroom(updateData: UpdateClassroomDto): Promise<Classroom> {
+    const studentsIds = updateData.studentsIds;
+    const teachersIds = updateData.teachersIds;
+
+    delete updateData.studentsIds;
+    delete updateData.teachersIds;
+
     return await this.prismaService.classroom.update({
-      where: { id: updateData.id },
-      data: {
-        ...updateData,
-        students: {
-          connect: updateData.studentsIds?.map((id) => ({ id: id })),
+        where: { id: updateData.id },
+        data: {
+          students: {
+            connect: studentsIds?.map((id) => ({ id: id })),
+          },
+          teachers: {
+            connect: teachersIds?.map((id) => ({ id: id })),
+          },
         },
-        teachers: {
-          connect: updateData.teachersIds?.map((id) => ({ id: id })),
-        },
-      },
-      include: this.dataToReturn,
-    });
+        include: this.dataToReturn,
+      });
   }
 
   async deleteClassroom(id: string): Promise<Classroom> {
