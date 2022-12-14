@@ -1,8 +1,10 @@
+import { Injectable } from '@nestjs/common';
 import { Classroom } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
 
+@Injectable()
 export class ClassroomRepository {
   private dataToReturn = {
     students: true,
@@ -61,7 +63,7 @@ export class ClassroomRepository {
       where: { id: id },
     });
   }
-  
+
   async findClassroomById(id: string): Promise<Classroom> {
     return await this.prismaService.classroom.findUnique({
       where: { id: id },
