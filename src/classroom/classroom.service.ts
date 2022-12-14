@@ -37,7 +37,11 @@ export class ClassroomService {
   }
 
   async remove(id: string): Promise<string> {
-    await this.classroomRepository.deleteClassroom(id);
-    return Promise.resolve('Classroom deleted succesfully');
+    try {
+      await this.classroomRepository.deleteClassroom(id);
+      return Promise.resolve('Classroom deleted succesfully');
+    } catch (err) {
+      return 'Classroom not found';
+    }
   }
 }

@@ -17,48 +17,48 @@ export class ClassroomController {
   constructor(private readonly classroomService: ClassroomService) {}
 
   @Post()
-  create(@Body() createClassroomDto: CreateClassroomDto) {
+   async create(@Body() createClassroomDto: CreateClassroomDto) {
     try {
-      return this.classroomService.create(createClassroomDto);
+      return await this.classroomService.create(createClassroomDto);
     } catch (err) {
       HandleException(err);
     }
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     try {
-      return this.classroomService.findAll();
+      return await this.classroomService.findAll();
     } catch (err) {
       HandleException(err);
     }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     try {
-      return this.classroomService.findOne(id);
+      return await this.classroomService.findOne(id);
     } catch (err) {
       HandleException(err);
     }
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateClassroomDto: UpdateClassroomDto,
   ) {
     try {
-      return this.classroomService.update(updateClassroomDto);
+      return await this.classroomService.update(updateClassroomDto);
     } catch (err) {
       HandleException(err);
     }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     try {
-      return this.classroomService.remove(id);
+      return await this.classroomService.remove(id);
     } catch (err) {
       HandleException(err);
     }
