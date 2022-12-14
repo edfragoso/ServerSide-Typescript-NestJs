@@ -4,10 +4,15 @@ import { AttendanceListController } from './attendance-list.controller';
 import { ClassroomService } from '../classroom/classroom.service';
 import { AttendanceListRepository } from './attendance-list.repository';
 import { DatabaseModule } from '../prisma/database.module';
+import { ClassroomRepository } from '../classroom/classroom.repository';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [AttendanceListController],
-  providers: [AttendanceListService, ClassroomService, AttendanceListRepository]
+  providers: [AttendanceListService,
+    ClassroomService, 
+    AttendanceListRepository,
+    ClassroomRepository
+  ]
 })
 export class AttendanceListModule {}
