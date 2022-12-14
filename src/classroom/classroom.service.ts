@@ -1,31 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
+import { ClassroomRepository } from './classroom.repository';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
 import { Classroom } from './entities/classroom.entity';
 
 @Injectable()
 export class ClassroomService {
-  private _classroomList: Classroom[] = [];
-  async create(createClassroomDto: CreateClassroomDto): Promise<Classroom> {
-    const createdClassroom: Classroom = {
-      ...createClassroomDto,
-      id: randomUUID(),
-      students: [],
-      teachers: [],
-      attendances: [],
-    };
 
-    this._classroomList.push(createdClassroom);
-    return createdClassroom;
+  constructor(private readonly classroomRepository: ClassroomRepository) {}
+  
+  async create(createClassroomDto: CreateClassroomDto): Promise<Classroom> {
+    const id = randomUUID();
+    return await this.classroomRepository.createClassroom(
+      createClassroomDto,
+      id,
+    );
   }
 
   async findAll(): Promise<Classroom[]> {
-    return this._classroomList;
+    return await this.classroomRepository.findAllClassroom();
   }
 
   async findOne(id: string): Promise<Classroom> {
-    return this._classroomList.find((Classroom) => Classroom.id === id);
+    return this.classroomRepository.findClassroomById(id);
   }
 
   async update(
