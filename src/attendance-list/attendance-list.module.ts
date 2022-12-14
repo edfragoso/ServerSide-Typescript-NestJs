@@ -5,6 +5,8 @@ import { ClassroomService } from '../classroom/classroom.service';
 import { AttendanceListRepository } from './attendance-list.repository';
 import { DatabaseModule } from '../prisma/database.module';
 import { ClassroomRepository } from '../classroom/classroom.repository';
+import { UserService } from '../user/services/user.service';
+import { UserRepository } from '../user/user.repository';
 
 @Module({
   imports: [DatabaseModule],
@@ -12,7 +14,9 @@ import { ClassroomRepository } from '../classroom/classroom.repository';
   providers: [AttendanceListService,
     ClassroomService, 
     AttendanceListRepository,
-    ClassroomRepository
+    ClassroomRepository,
+    UserService,
+    UserRepository,
   ]
 })
 export class AttendanceListModule {}
