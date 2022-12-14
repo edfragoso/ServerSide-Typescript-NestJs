@@ -1,6 +1,5 @@
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import { IUserEntity } from "../../user/entityes/user.entity";
 
 export class CreateClassroomDto {    
     @ApiProperty()
