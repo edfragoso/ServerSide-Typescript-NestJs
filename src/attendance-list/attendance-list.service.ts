@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { ClassroomService } from '../classroom/classroom.service';
+import { UserService } from '../user/services/user.service';
 import { Exception } from '../utils/exceptions/exception';
 import { Exceptions } from '../utils/exceptions/exceptionsHelper';
 import { AttendanceListRepository } from './attendance-list.repository';
@@ -12,6 +13,7 @@ import { AttendanceList } from './entities/attendance-list.entity';
 export class AttendanceListService {
   constructor(
     private readonly classroomService: ClassroomService,
+    private readonly userService: UserService,
     private readonly attendanceLisRepository: AttendanceListRepository,
   ) {}
 
@@ -59,10 +61,17 @@ export class AttendanceListService {
     userId: string,
   ): Promise<AttendanceList> {
     const findedAttendenceList = await this.findOne(attendanceListId);
+    const FindedStudent = await this.userService.findUserById(userId)
+    const FindedClassroom = await this.classroomService.findOne(findedAttendenceList.classroomId)
     const actualDate = new Date(Date.now());
     
     if (actualDate.getTime() > findedAttendenceList.endDate.getTime()) {
       throw new Exception(Exceptions.InvalidData, 'Ferrou');
+    }
+
+    if (!FindedClassroom.students.includes(FindedStudent)) {
+      throw new Exception(Exceptions.InvalidData, "This student not fouind in classroom")
+      
     }
 
     return await this.attendanceLisRepository.updateAttendanceList({
