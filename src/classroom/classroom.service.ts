@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
+import { Exception } from '../utils/exceptions/exception';
+import { Exceptions } from '../utils/exceptions/exceptionsHelper';
 import { ClassroomRepository } from './classroom.repository';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
@@ -26,18 +28,14 @@ export class ClassroomService {
     return this.classroomRepository.findClassroomById(id);
   }
 
-  async update(
-    id: string,
-    updateClassroomDto: UpdateClassroomDto,
-  ): Promise<Classroom> {
-    this._classroomList.map((classroom, index) => {
-      if (classroom.id == id) {
-        const updatedClassroom = Object.assign(classroom, updateClassroomDto);
-        this._classroomList.splice(index, 1, updatedClassroom);
-      }
-    });
+  async update(updateClassroomDto: UpdateClassroomDto): Promise<Classroom> {
+    if(!updateClassroomDto.studentsIds && !updateClassroomDto.teachersIds){
+      throw new Exception(Exceptions.InvalidData, "not send reference to connection");
+    } 
+    
+    return await this.classroomRepository.updateClassroom(updateClassroomDto);
+  }
 
-    return await this.findOne(id);
   }
 
   async remove(id: string): Promise<string> {
