@@ -14,7 +14,9 @@ import { UserDto } from './services/dto/userInput.dto';
 import { UserService } from './services/user.service';
 import { Response } from 'express';
 import { HandleException } from '../utils/exceptions/exceptionsHelper';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Usuários")
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {}

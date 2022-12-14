@@ -1,10 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HandleException } from '../utils/exceptions/exceptionsHelper';
 import { AttendanceListService } from './attendance-list.service';
 import { CreateAttendanceListDto } from './dto/create-attendance-list.dto';
 import { RegisterOnAttendanceListDto } from './dto/register-on-attendance-list.dto';
 import { UpdateAttendanceListDto } from './dto/update-attendance-list.dto';
 
+
+@ApiTags("Lista de Presenças")
 @Controller('attendance-list')
 export class AttendanceListController {
   constructor(private readonly attendanceListService: AttendanceListService) {}

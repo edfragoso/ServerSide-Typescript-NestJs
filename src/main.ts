@@ -12,7 +12,9 @@ async function bootstrap(): Promise<void> {
     .setTitle('Cadastro de usuários')
     .setDescription('Api para cadastros de usuários')
     .setVersion('1.0')
-    .addTag('CRUD')
+    .addTag('Usuários')
+    .addTag('Salas de Aula')
+    .addTag('Lista de Presenças')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
