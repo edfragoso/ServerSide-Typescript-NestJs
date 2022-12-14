@@ -61,11 +61,18 @@ export class ClassroomRepository {
       where: { id: id },
     });
   }
+  
   async findClassroomById(id: string): Promise<Classroom> {
     return await this.prismaService.classroom.findUnique({
       where: { id: id },
       include: this.dataToReturn,
     });
   }
-  
+
+  async findAllClassroom(): Promise<Classroom[]> {
+    return await this.prismaService.classroom.findMany({
+      include: this.dataToReturn,
+    });
+  }
+
 }
