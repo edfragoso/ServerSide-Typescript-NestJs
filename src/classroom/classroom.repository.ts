@@ -3,6 +3,8 @@ import { Classroom } from './entities/classroom.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
+import { Exception } from '../utils/exceptions/exception';
+import { Exceptions } from '../utils/exceptions/exceptionsHelper';
 
 @Injectable()
 export class ClassroomRepository {
@@ -21,33 +23,38 @@ export class ClassroomRepository {
     { name, subject, theme }: CreateClassroomDto,
     id: string,
   ): Promise<Classroom> {
-    return await this.prismaService.classroom.create({
-      data: {
-        id: id,
-        name: name,
-        subject: subject,
-        theme: theme,
-      },
-      include: {
-        attendances: {
-          include: {
-            students: true,
-          },
+    try {
+      return await this.prismaService.classroom.create({
+        data: {
+          id: id,
+          name: name,
+          subject: subject,
+          theme: theme,
         },
-        students: true,
-        teachers: true,
-      },
-    });
+        include: {
+          attendances: {
+            include: {
+              students: true,
+            },
+          },
+          students: true,
+          teachers: true,
+        },
+      });
+    } catch (err) {
+      throw new Exception(Exceptions.DatabaseException, err.message);
+    }
   }
 
   async updateClassroom(updateData: UpdateClassroomDto): Promise<Classroom> {
-    const studentsIds = updateData.studentsIds;
-    const teachersIds = updateData.teachersIds;
+    try {
+      const studentsIds = updateData.studentsIds;
+      const teachersIds = updateData.teachersIds;
 
-    delete updateData.studentsIds;
-    delete updateData.teachersIds;
+      delete updateData.studentsIds;
+      delete updateData.teachersIds;
 
-    return await this.prismaService.classroom.update({
+      return await this.prismaService.classroom.update({
         where: { id: updateData.id },
         data: {
           students: {
@@ -59,25 +66,40 @@ export class ClassroomRepository {
         },
         include: this.dataToReturn,
       });
+    } catch (err) {
+      throw new Exception(Exceptions.DatabaseException, err.message);
+    }
   }
 
   async deleteClassroom(id: string): Promise<Classroom> {
-    return await this.prismaService.classroom.delete({
-      where: { id: id },
-      include: this.dataToReturn,
-    });
+    try {
+      return await this.prismaService.classroom.delete({
+        where: { id: id },
+        include: this.dataToReturn,
+      });
+    } catch (err) {
+      throw new Exception(Exceptions.DatabaseException, err.message);
+    }
   }
 
   async findClassroomById(id: string): Promise<Classroom> {
-    return await this.prismaService.classroom.findUnique({
-      where: { id: id },
-      include: this.dataToReturn,
-    });
+    try {
+      return await this.prismaService.classroom.findUnique({
+        where: { id: id },
+        include: this.dataToReturn,
+      });
+    } catch (err) {
+      throw new Exception(Exceptions.DatabaseException, err.message);
+    }
   }
 
   async findAllClassroom(): Promise<Classroom[]> {
-    return await this.prismaService.classroom.findMany({
-      include: this.dataToReturn,
-    });
+    try {
+      return await this.prismaService.classroom.findMany({
+        include: this.dataToReturn,
+      });
+    } catch (err) {
+      throw new Exception(Exceptions.DatabaseException, err.message);
+    }
   }
 }
