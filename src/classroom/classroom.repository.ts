@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Classroom } from '@prisma/client';
+import { Classroom } from './entities/classroom.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
@@ -17,12 +17,10 @@ export class ClassroomRepository {
   };
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createClassroom({
-    id,
-    name,
-    subject,
-    theme,
-  }: Classroom): Promise<Classroom> {
+  async createClassroom(
+    { name, subject, theme }: CreateClassroomDto,
+    id: string,
+  ): Promise<Classroom> {
     return await this.prismaService.classroom.create({
       data: {
         id: id,
@@ -61,6 +59,7 @@ export class ClassroomRepository {
   async deleteClassroom(id: string): Promise<Classroom> {
     return await this.prismaService.classroom.delete({
       where: { id: id },
+      include: this.dataToReturn,
     });
   }
 
@@ -76,5 +75,4 @@ export class ClassroomRepository {
       include: this.dataToReturn,
     });
   }
-
 }
