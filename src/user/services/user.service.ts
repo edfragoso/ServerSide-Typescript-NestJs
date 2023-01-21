@@ -5,6 +5,7 @@ import { PartialUserDto } from './dto/partialUserInput.dto';
 import { UserRepository } from '../user.repository';
 import { Injectable } from '@nestjs/common';
 import { Exceptions } from '../../utils/exceptions/exceptionsHelper';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -18,12 +19,17 @@ export class UserService {
         exception: Exceptions.InvalidData,
       };
     }
+
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    userEntity.password = hashedPassword
     const createdUser = await this.userRepository.createUser(userEntity);
+    delete createdUser.password;
     return createdUser;
   }
 
   async updateUser(userData: PartialUserDto): Promise<IUserEntity> {
     const updatedUser = await this.userRepository.updateUser(userData);
+    delete updatedUser.password;
     return updatedUser;
   }
 
