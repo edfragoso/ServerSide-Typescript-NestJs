@@ -16,8 +16,8 @@ import { Response } from 'express';
 import { HandleException } from '../utils/exceptions/exceptionsHelper';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Usuários")
 @Controller('user')
+@ApiTags("Usuários")
 export class UserController {
   constructor(private readonly service: UserService) {}
 
