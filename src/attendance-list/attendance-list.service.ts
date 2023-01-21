@@ -25,7 +25,7 @@ export class AttendanceListService {
     const today = new Date(Date.now()).toISOString().slice(0, 10);
     const formatedToday =
       today.slice(8, 10) + '/' + today.slice(5, 7) + '/' + today.slice(0, 4);
-    const endDateToAttendance = 2 * 60 * 1000;
+    const endDateToAttendance = 10 * 60 * 1000;
     const attendanceToday: AttendanceList = {
       ...createAttendanceListDto,
       id: randomUUID(),
@@ -61,23 +61,32 @@ export class AttendanceListService {
     userId: string,
   ): Promise<AttendanceList> {
     const findedAttendenceList = await this.findOne(attendanceListId);
-    const FindedStudent = await this.userService.findUserById(userId)
-    const FindedClassroom = await this.classroomService.findOne(findedAttendenceList.classroomId)
+    const FindedClassroom = await this.classroomService.findOne(findedAttendenceList.classroomId);
     const actualDate = new Date(Date.now());
     
     if (actualDate.getTime() > findedAttendenceList.endDate.getTime()) {
       throw new Exception(Exceptions.InvalidData, 'Ferrou');
     }
 
-    if (!FindedClassroom.students.includes(FindedStudent)) {
-      throw new Exception(Exceptions.InvalidData, "This student not fouind in classroom")
-      
+    const TrackStudents = new Map<string, any>();
+    for (const student of FindedClassroom.students) {
+      TrackStudents.set(student.id, { ...student });
     }
 
-    return await this.attendanceLisRepository.updateAttendanceList({
-      id: attendanceListId,
-      studentsId: [userId],
-    });
-  }
+    if (TrackStudents.get(userId) === undefined) {
+      throw new Exception(
+        Exceptions.InvalidData,
+        'This student not found in classroom',
+      );
+    }
 
+    const dataToReturn =
+      await this.attendanceLisRepository.updateAttendanceList({
+        id: attendanceListId,
+        studentsIds: [userId],
+      });
+
+    delete dataToReturn.students;
+    return dataToReturn;
+    }
 }
