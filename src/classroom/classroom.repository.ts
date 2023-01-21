@@ -19,7 +19,7 @@ export class ClassroomRepository {
   };
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createClassroom(
+  async createClassrooms(
     { name, subject, theme }: CreateClassroomDto,
     id: string,
   ): Promise<Classroom> {
@@ -31,15 +31,7 @@ export class ClassroomRepository {
           subject: subject,
           theme: theme,
         },
-        include: {
-          attendances: {
-            include: {
-              students: true,
-            },
-          },
-          students: true,
-          teachers: true,
-        },
+        include: this.dataToReturn,
       });
     } catch (err) {
       throw new Exception(Exceptions.DatabaseException, err.message);
@@ -71,7 +63,7 @@ export class ClassroomRepository {
     }
   }
 
-  async deleteClassroom(id: string): Promise<Classroom> {
+  async deleteClassrooms(id: string): Promise<Classroom> {
     try {
       return await this.prismaService.classroom.delete({
         where: { id: id },
@@ -93,7 +85,7 @@ export class ClassroomRepository {
     }
   }
 
-  async findAllClassroom(): Promise<Classroom[]> {
+  async findAllClassrooms(): Promise<Classroom[]> {
     try {
       return await this.prismaService.classroom.findMany({
         include: this.dataToReturn,
