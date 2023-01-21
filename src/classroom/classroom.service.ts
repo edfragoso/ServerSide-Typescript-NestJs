@@ -14,14 +14,14 @@ export class ClassroomService {
   
   async create(createClassroomDto: CreateClassroomDto): Promise<Classroom> {
     const id = randomUUID();
-    return await this.classroomRepository.createClassroom(
+    return await this.classroomRepository.createClassrooms(
       createClassroomDto,
       id,
     );
   }
 
   async findAll(): Promise<Classroom[]> {
-    return await this.classroomRepository.findAllClassroom();
+    return await this.classroomRepository.findAllClassrooms();
   }
 
   async findOne(id: string): Promise<Classroom> {
@@ -38,7 +38,7 @@ export class ClassroomService {
 
   async remove(id: string): Promise<string> {
     try {
-      await this.classroomRepository.deleteClassroom(id);
+      await this.classroomRepository.deleteClassrooms(id);
       return Promise.resolve('Classroom deleted succesfully');
     } catch (err) {
       return 'Classroom not found';
