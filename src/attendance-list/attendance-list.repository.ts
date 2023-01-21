@@ -32,14 +32,14 @@ export class AttendanceListRepository {
 
   async updateAttendanceList({
     id,
-    studentsId,
+    studentsIds,
   }: UpdateAttendanceListDto): Promise<AttendanceList> {
     try {
       return await this.prismaService.attendanceList.update({
         where: { id: id },
         data: {
           students: {
-            connect: studentsId.map((id) => {
+            connect: studentsIds.map((id) => {
               return { id: id };
             }),
           },
