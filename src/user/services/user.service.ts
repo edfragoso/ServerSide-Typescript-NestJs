@@ -12,7 +12,7 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async createUser(user: UserDto): Promise<IUserEntity> {
-    const userEntity = { ...user, id: randomUUID() };
+    const userEntity = { ...user, id: randomUUID(), role: 'user' };
     if (user.password.length <= 7) {
       throw {
         message: 'Passoword less than 7 characters.',
