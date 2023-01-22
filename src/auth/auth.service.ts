@@ -15,11 +15,13 @@ export class AuthService {
   ) {}
 
   async validateUser({ email, password }: UserLoginDto) {
+    
     const user = await this.userService.findUserByEmail(email);
-
     const passwordIsValid = await compare(password, user.password);
-    console.log(user)
-    console.log(passwordIsValid)
+    
+    /* console.log(user) */
+    /* console.log(passwordIsValid) */
+    
     if (!passwordIsValid) {
       throw new Exception(Exceptions.UnauthorizedException, 'Invalid password');
     }
