@@ -5,6 +5,7 @@ import { HandleException } from "../utils/exceptions/exceptionsHelper";
 import { AuthService } from "./auth.service";
 import { UserLoginDto } from "./dto/user-login-input.dto";
 import { Request, UseGuards } from '@nestjs/common/decorators';
+import { IsTeacherAuthorization } from "./decorators/is-teacher.decorator";
 
 @Controller('Authorization')
 @ApiTags('Authorization')
@@ -20,10 +21,10 @@ export class AuthController {
     }
   }
 
+  @UseGuards(AuthGuard(), IsTeacherAuthorization)
   @Get()
-  @UseGuards(AuthGuard(),)
-   @ApiBearerAuth()
+  @ApiBearerAuth()
   async getUser(@Request() req) {
-    console.log(req);
+   return 'Teacher Access - OK';
   }
 }
