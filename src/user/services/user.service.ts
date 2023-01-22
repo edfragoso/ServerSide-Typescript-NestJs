@@ -21,7 +21,7 @@ export class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
-    userEntity.password = hashedPassword
+    userEntity.password = hashedPassword;
     const createdUser = await this.userRepository.createUser(userEntity);
     delete createdUser.password;
     return createdUser;
@@ -53,4 +53,10 @@ export class UserService {
     delete foundUser.password;
     return foundUser;
   }
+
+  async findUserByEmail(email: string): Promise<IUserEntity> {
+    const user = await this.userRepository.findUserByEmail(email);
+    return user;
+  }
+
 }
