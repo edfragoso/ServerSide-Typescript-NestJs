@@ -14,7 +14,7 @@ import { UserDto } from './services/dto/userInput.dto';
 import { UserService } from './services/user.service';
 import { Response } from 'express';
 import { HandleException } from '../utils/exceptions/exceptionsHelper';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
 @ApiTags("Usuários")
@@ -63,7 +63,7 @@ export class UserController {
       HandleException(err);
     }
   }
-
+  @ApiBearerAuth()
   @Delete(':id')
   async deleteUserById(@Param('id') userId: string): Promise<string> {
     const userIsDeleted = await this.service.deleteUserById(userId);
