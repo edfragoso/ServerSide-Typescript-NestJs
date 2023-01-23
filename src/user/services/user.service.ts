@@ -15,7 +15,7 @@ export class UserService {
     const userEntity = { ...user, id: randomUUID(), role: 'user' };
     if (user.password.length <= 7) {
       throw {
-        message: 'Passoword less than 7 characters.',
+        message: 'Password less than 7 characters.',
         exception: Exceptions.InvalidData,
       };
     }
