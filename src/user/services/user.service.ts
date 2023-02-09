@@ -5,7 +5,7 @@ import { PartialUserDto } from './dto/partialUserInput.dto';
 import { UserRepository } from '../user.repository';
 import { Injectable } from '@nestjs/common';
 import { Exceptions } from '../../utils/exceptions/exceptionsHelper';
-import * as bcrypt from 'bcrypt';
+import { hash } from 'bcrypt';
 
 
 @Injectable()
