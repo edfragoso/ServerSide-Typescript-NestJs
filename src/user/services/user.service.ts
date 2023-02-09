@@ -21,7 +21,7 @@ export class UserService {
       };
     }
 
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const hashedPassword = await hash(user.password, 10);
     userEntity.password = hashedPassword;
     const createdUser = await this.userRepository.createUser(userEntity);
     delete createdUser.password;
