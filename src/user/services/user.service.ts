@@ -1,6 +1,6 @@
 import { IUserEntity } from '../entityes/user.entity';
 import { UserDto } from './dto/userInput.dto';
-import { randomUUID } from 'node:crypto';
+import { randomBytes } from 'crypto';
 import { PartialUserDto } from './dto/partialUserInput.dto';
 import { UserRepository } from '../user.repository';
 import { Injectable } from '@nestjs/common';
@@ -13,7 +13,7 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async createUser(user: UserDto): Promise<IUserEntity> {
-    const userEntity = { ...user, id: randomUUID(), role: 'user' };
+    const userEntity = { ...user, id: randomBytes(16).toString("hex"), role: 'user' };
     if (user.password.length <= 7) {
       throw {
         message: 'Password less than 7 characters.',
