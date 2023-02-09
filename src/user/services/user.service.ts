@@ -7,6 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { Exceptions } from '../../utils/exceptions/exceptionsHelper';
 import * as bcrypt from 'bcrypt';
 
+
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
